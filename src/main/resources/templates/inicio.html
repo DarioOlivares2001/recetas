@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Inicio</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/estilos.css}" />
+</head>
+<body>
+    <h1>Recetas Recientes</h1>
+    <div th:each="receta : ${recetas}">
+        <h2 th:text="${receta.nombre}">Nombre de la Receta</h2>
+        <p th:text="${receta.ingredientes}">Ingredientes</p>
+        <a th:href="@{/receta/{nombre}(nombre=${receta.nombre})}">Ver Detalles</a>
+    </div>
+
+    <!-- Este enlace solo es visible para usuarios autenticados -->
+    <div sec:authorize="isAuthenticated()">
+        <a href="/recetas/agregar">Agregar Receta</a>
+    </div>
+
+    <a href="/login" sec:authorize="!isAuthenticated()">Iniciar Sesión</a>
+    <a href="/logout" sec:authorize="isAuthenticated()">Cerrar Sesión</a>
+</body>
+</html>
